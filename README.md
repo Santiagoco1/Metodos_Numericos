@@ -1,5 +1,8 @@
 # Métodos Numéricos
 ## Práctica 2
+### Ejercicio 1
+```
+```
 ### Ejercicio 3-b
 ```
 function z=hornet(x,p)
