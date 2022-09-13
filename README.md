@@ -80,3 +80,15 @@ function salida = biseccion(fun, a, b, tol)
     end
 endfunction
 ```
+### Método Secante
+```
+function salida=secante(fun, x0, x1, tol)
+	deff("y=f(x)", "y=" + fun)
+	while abs(x0 - x1) > tol
+		x2 = x1 - f(x1)*((x1-x0)/(f(x1)-f(x0)))
+		x0 = x1
+		x1 = x2
+	end
+	salida = x0
+endfunction
+```
