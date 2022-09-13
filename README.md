@@ -1,5 +1,5 @@
 # Métodos Numéricos
-## Práctica 2
+## Unidad 2
 ### Ejercicio 1
 ```
 function y=raices(p)
@@ -31,5 +31,24 @@ function z=hornet(x,p)
         end
         z = b(1)
     end
+endfunction
+```
+## Unidad 3
+### Método Newton
+```
+function salida = newton(fun, x0, tol, iter)
+    deff("y=f(x)", "y=" + fun)
+    i = 0
+    x1 = x0 - f(x0)/numderivative(f, x0)
+    while abs(x1 - x0) > tol && i < iter
+        i = i+1
+        x0 = x1
+        x1 =  x0 - f(x0)/numderivative(f, x0)
+    end
+    if (abs(x1 - x0) > tol) then 
+        disp('Se alcanzó el máximo de iteraciones')
+    end
+    disp(i)
+    salida = x1
 endfunction
 ```
