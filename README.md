@@ -52,3 +52,31 @@ function salida = newton(fun, x0, tol, iter)
     salida = x1
 endfunction
 ```
+### Ejercicio 2-a
+```
+function salida = biseccion(fun, a, b, tol)
+    deff("y=f(x)", "y=" + fun)
+    if f(a)*f(b) < 0 then
+        bool = 1
+        while(bool)
+            c = (a + b) / 2
+            disp(b - c)
+            if(abs(b - c) > tol)
+                if(f(c) == 0)
+                    salida = c
+                    bool = 0
+                else
+                    if (f(a) * f(c)) < 0 then
+                        b = c
+                    else
+                        a = c
+                    end
+                end
+            else
+                salida = b
+                bool = 0
+            end
+        end
+    end
+endfunction
+```
