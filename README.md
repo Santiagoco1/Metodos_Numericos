@@ -52,7 +52,7 @@ function salida = newton(fun, x0, tol, iter)
     salida = x1
 endfunction
 ```
-### Ejercicio 2-a
+### Método Bisección
 ```
 function salida = biseccion(fun, a, b, tol)
     deff("y=f(x)", "y=" + fun)
