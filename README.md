@@ -119,3 +119,30 @@ function salida=secante(fun, x0, x1, tol)
 	salida = x0
 endfunction
 ```
+### Método Newton Multivariable
+```
+function y=fx(x)
+    f1 = (x(1)**2) + (x(1)*(x(2)**3))-9
+    f2 = (3*(x(1)**2)*x(2))-4-(x(2)**3)
+    y = [f1;f2]
+endfunction
+
+function res=fy(x0)
+    x = x0(1)
+    y = x0(2) 
+    f1 = 1+(x**2)-y**2+%e**x*cos(y)
+    f2 = 2*x*y+%e**x*sin(y)
+    res = [f1; f2]
+endfunction
+
+function y=newton(x0, f, it)
+    x1 = x0 - ((numderivative(f, x0)**-1)*f(x0))
+    i = 0
+    while(i < it)
+        x0 = x1
+        x1 = x0 - ((numderivative(f, x0)**-1)*f(x0))
+        i = i + 1
+    end
+    y = x1
+endfunction
+```
