@@ -52,8 +52,8 @@ function salida = derivar(fun, v, n, h)
 	end
 endfunction
 ```
-```
 ### Ejercicio 5
+```
 function y = taylor(fun, n, v, x)
 	deff("y=f(x)", "y=" + fun)
 	y = f(v)
