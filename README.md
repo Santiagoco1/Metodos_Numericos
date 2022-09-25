@@ -34,6 +34,7 @@ function z=hornet(x,p)
 endfunction
 ```
 ### Ejercicio 4
+```
 function y = dfa(f, v, n, h)
     if (n == 1) 
         y = (f(v+h) - f(v))/h
@@ -50,7 +51,8 @@ function salida = derivar(fun, v, n, h)
 	    salida = dfa(f, v, n, h)
 	end
 endfunction
-
+```
+```
 ### Ejercicio 5
 function y = taylor(fun, n, v, x)
 	deff("y=f(x)", "y=" + fun)
@@ -59,7 +61,7 @@ function y = taylor(fun, n, v, x)
 		y = y + (derivar(fun, v, i, 0.1)*((x-v)**i))/factorial(i)
 	end
 endfunction
-
+```
 ## Unidad 3
 ### Método Newton
 ```
