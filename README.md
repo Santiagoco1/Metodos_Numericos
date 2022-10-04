@@ -152,9 +152,6 @@ endfunction
 ### Ejercicio 2
 ```
 function [x,a, y] = gausselim(A,b)
-// Esta función obtiene la solución del sistema de ecuaciones lineales A*x=b, 
-// dada la matriz de coeficientes A y el vector b.
-// La función implementa el método de Eliminación Gaussiana sin pivoteo.  
 
 [nA,mA] = size(A) 
 [nb,mb] = size(b)
@@ -180,10 +177,10 @@ for k=1:n-1
             a(i,j) = a(i,j) - a(k,j)*a(i,k)/a(k,k);
         end;
         //a(i,1:k) = 0 ejercicio 4
-        for j=1:k        // no hace falta para calcular la solución x
+        for j=1:k
             cont = cont +1
-            a(i,j) = 0;  // no hace falta para calcular la solución x
-        end              // no hace falta para calcular la solución x
+            a(i,j) = 0;
+        end
     end;
 end;
 
@@ -221,9 +218,48 @@ A2 = [1 -1 2 -1; 2 -2 3 -3; 1 1 1 0; 1 -1 4 3]
 b2 = [-8 -20 -2 4]'
 
 [x2,a2] = gausselim(A2,b2)
+```
+### Ejercicio 3
+```
+function [x,a] = gausselim(A,B)
 
-// !--error 27 
-//Division by zero...
-//at line      24 of function gausselim called by :  
-//[x2,a2] = gausselim(A2,b2)
+[nA,mA] = size(A) 
+[nb,mb] = size(B)
+if nA<>mA then
+    error('gausselim - La matriz A debe ser cuadrada');
+    abort;
+elseif mA<>nb then
+    error('gausselim - dimensiones incompatibles entre A y b');
+    abort;
+end;
+a = [A B]; // Matriz aumentada
+
+// Eliminación progresiva
+n = nA;
+
+for k=1:n-1
+    for i=k+1:n
+        for j=k+1:n+ mb
+            a(i,j) = a(i,j) - a(k,j)*a(i,k)/a(k,k);
+        end;
+        for j=1:k        
+            a(i,j) = 0;  
+        end              
+    end;
+end;
+
+// Sustitución regresiva
+x(n,mb) = 0
+for s= 1:mb
+    x(n,s) = a(n,n+s)/a(n,n);
+    for i = n-1:-1:1
+        sumk = 0
+        for k=i+1:n
+            sumk = sumk + a(i,k)*x(k,s);
+        end;
+        x(i,s) = (a(i,n+s)-sumk)/a(i,i);
+    end;
+end
+
+endfunction
 ```
