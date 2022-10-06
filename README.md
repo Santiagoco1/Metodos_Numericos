@@ -335,3 +335,38 @@ for i = n-1:-1:1
 end;
 endfunction
 ```
+### Ejercicio 7
+```
+function [L,U,P]= factorizacion_LU(A)
+    U = A
+    L = eye(A)
+    P = eye(A)
+    [m, n] = size(A)
+    if m <> n then
+        error("La matriz no es cuadrada")
+        abort
+    end
+    for k = 1: m - 1
+        kpivot = k; amax = abs(U(k,k));  //pivoteo
+        for i=k+1:n
+            if abs(U(i,k))>amax then
+                kpivot = i; amax = U(i,k);
+            end;
+        end;
+        temp = U(kpivot,k:m);
+        U(kpivot,k:m) = U(k,k:m);
+        U(k,k:m) = temp;
+        temp = P(kpivot,:);
+        P(kpivot,:) = P(k,:);
+        P(k,:) = temp;
+        temp = L(kpivot,1:k-1);
+        L(kpivot,1:k-1) = L(k,1:k-1);
+        L(k,1:k-1) = temp;
+        
+        for j = k + 1: m
+            L(j,k) = U(j, k)/U(k,k)
+            U(j,k:m) = U(j,k:m) - L(j,k)*U(k,k:m)
+        end
+    end;
+endfunction
+```
