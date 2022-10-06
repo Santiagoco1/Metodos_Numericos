@@ -297,3 +297,41 @@ end
 
 endfunction
 ```
+### Ejercicio 6
+```
+function [x,a] = gausselimPP(A,b)
+
+[nA,mA] = size(A) 
+[nb,mb] = size(b)
+
+if nA<>mA then
+    error('gausselim - La matriz A debe ser cuadrada');
+    abort;
+elseif mA<>nb then
+    error('gausselim - dimensiones incompatibles entre A y b');
+    abort;
+end;
+
+a = [A b]; // Matriz aumentada
+n = nA;    // Tamaño de la matriz
+
+// Eliminación progresiva con pivoteo parcial
+for k=1:n-1
+    if(abs(a(k,k)) < abs(a(k+1,k))) then
+        temp = a(k+1,:);
+        a(k+1,:) = a(k,:); 
+        a(k,:) = temp;
+    end
+    
+    a(k+1,k+1:n+1) = a(k+1,k+1:n+1) - a(k,k+1:n+1) * a(k+1,k)/a(k,k);      
+    a(k+1,k) = 0;
+end;
+
+// Sustitución regresiva
+x = zeros(1,n);
+x(n) = a(n,n+1)/a(n,n);
+for i = n-1:-1:1
+    x(i) = (a(i,n+1)-(a(i,1:n) * x'))/a(i,i);
+end;
+endfunction
+```
