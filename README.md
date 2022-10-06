@@ -263,3 +263,37 @@ end
 
 endfunction
 ```
+### Ejercicio 4
+```
+function x = determinante(A)
+    
+[nA,mA] = size(A) 
+
+if nA<>mA then
+    error('gausselim - La matriz A debe ser cuadrada');
+    abort;
+end;
+
+counter = 0;
+
+a = A
+
+// Eliminación progresiva
+n = nA;
+for k=1:n-1
+    for i=k+1:n
+        a(i,k+1:n) = a(i,k+1:n) - a(k,k+1:n) * a(i,k)/a(k,k);
+        a(i,1:k) = 0;              // no hace falta para calcular la solución x
+    end;
+end;
+
+disp(a)
+
+// Calculo del determinante
+x = 1
+for k=1:n
+    x = x * a(k,k) 
+end
+
+endfunction
+```
