@@ -268,3 +268,80 @@ function [y,x,L,U] = ecuacion(A,B)
     end
 endfunction
 ```
+### Ejercicio 12-a
+```
+function [U,ind] = cholesky(A)
+eps = 1.0e-8
+
+n = size(A,1)
+U = zeros(n,n)
+
+t = A(1,1)
+if t <= eps then
+    printf('Matriz no definida positiva.\n')
+    ind = 0
+    return
+end
+
+U(1,1) = sqrt(t)
+for j = 2:n
+    U(1,j) = A(1,j)/U(1,1)
+end
+    
+for k = 2:n
+    t = A(k,k) - U(1:k-1,k)'*U(1:k-1,k)
+    if t <= eps then
+        printf('Matriz no definida positiva.\n')
+        ind = 0
+        return
+    end
+    U(k,k) = sqrt(t)
+    for j = k+1:n
+        U(k,j) = ( A(k,j) - U(1:k-1,k)'*U(1:k-1,j) )/U(k,k)
+    end
+end
+ind = 1
+
+endfunction
+
+function [y,x,U] = sistema(A, B)
+    [nA,mA] = size(A) 
+    [nb,mb] = size(B)
+    if nA<>mA then
+        error('gausselim - La matriz A debe ser cuadrada');
+        abort;
+    elseif mA<>nb then
+        error('gausselim - dimensiones incompatibles entre A y b');
+        abort;
+    end;
+    n = nA
+    [U] = cholesky(A)
+    
+    l = [U' B];
+    x(n,mb) = 0
+    for s = 1:mb
+        x(s,s) = l(s,n+s)/l(s,s)
+        for i = 2:1:n
+            sumk = 0
+            for k=1:i
+                sumk = sumk + l(i,k)*x(k,s)
+            end
+            x(i,s) = (l(i,n+s)-sumk)/l(i,i)
+        end
+    end
+    
+    u = [U x]
+    y(n,mb) = 0
+    for s= 1:mb
+        y(n,s) = u(n,n+s)/u(n,n)
+        for i = n-1:-1:1
+            sumk = 0
+            for k=i+1:n
+                sumk = sumk + u(i,k)*y(k,s)
+            end
+            y(i,s) = (u(i,n+s)-sumk)/u(i,i)
+        end
+    end
+
+endfunction
+```
