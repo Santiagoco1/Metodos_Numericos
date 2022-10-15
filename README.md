@@ -370,3 +370,70 @@ function [L,U,P]= factorizacion_LU(A)
     end;
 endfunction
 ```
+### Ejercicio 10
+```
+function [L,U]= doolittle(A)
+    [m, n] = size(A)
+    
+    for i = 1:n
+        for k = i:n
+            sum = 0
+            for j = 1:i-1
+                sum = sum + L(i,j)*U(j,k)
+            end
+            U(i,k) = A(i,k) - sum
+        end
+        for k = i:n
+            if(i == k)
+                L(i,i) = 1
+            else
+                sum = 0
+                for j = 1:i-1
+                    sum = sum + L(k,j)*U(j,i)
+                end
+                L(k,i) = (A(k,i) - sum) / U(i,i)
+            end
+        end
+    end
+endfunction
+
+function [y,x,L,U] = ecuacion(A,B)
+    [nA,mA] = size(A) 
+    [nb,mb] = size(B)
+    if nA<>mA then
+        error('gausselim - La matriz A debe ser cuadrada');
+        abort;
+    elseif mA<>nb then
+        error('gausselim - dimensiones incompatibles entre A y b');
+        abort;
+    end;
+    
+    [L,U] = doolittle(A)
+    
+    l = [L B];
+    x(n,mb) = 0
+    for s = 1:mb
+        x(s,s) = l(s,n+s)/l(s,s)
+        for i = 2:1:n
+            sumk = 0
+            for k=1:i
+                sumk = sumk + l(i,k)*x(k,s)
+            end
+            x(i,s) = (l(i,n+s)-sumk)/l(i,i)
+        end
+    end
+    
+    u = [U x]
+    y(n,mb) = 0
+    for s= 1:mb
+        y(n,s) = u(n,n+s)/u(n,n)
+        for i = n-1:-1:1
+            sumk = 0
+            for k=i+1:n
+                sumk = sumk + u(i,k)*y(k,s)
+            end
+            y(i,s) = (u(i,n+s)-sumk)/u(i,i)
+        end
+    end
+endfunction
+```
