@@ -30,7 +30,7 @@ endfunction
 ```
 ### Método de Gauss-Seidel
 ```
-function x = gauss-seidel(A, b, x0, eps)
+function x = gauss_seidel(A, b, x0, eps)
     n = size(A,1)
     x = x0
     xk = x
