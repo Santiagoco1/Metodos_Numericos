@@ -1,4 +1,13 @@
  # Unidad 6
+ ### Polinomio Caracteristico
+ ```
+ function p = pol_car(A)
+    x = poly([0 1], "x", "coeff")
+    n = size(A, 1)
+    I = eye(n,n)
+    p = det(A - x * I)
+ endfunction
+ ```
  ### Método Potencia con Tolerancia
  ```
  function [z,l] = pot(A,z,esp)
