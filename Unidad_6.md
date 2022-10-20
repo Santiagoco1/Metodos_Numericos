@@ -24,7 +24,7 @@
      my = -My
      rect = [mx,my,Mx,My]
      plot2d(real(spec(A)),imag(spec(A)),-1,"031","",rect)
-     //replot(rect)
+     replot(rect)
      xgrid()
      for i=1:n
          circ(r(i), c(i), 0)
