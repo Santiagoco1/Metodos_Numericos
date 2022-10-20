@@ -8,6 +8,33 @@
     p = det(A - x * I)
  endfunction
  ```
+ ### Ejercicio 4
+ ```
+ function circ(r,x,y)
+     xarc(x-r, y+r, r*2, r*2, 0, 360*64)
+ endfunction
+
+ function gers(A)
+     n = size(A,1)
+     c = diag(A)
+     r = sum(abs(A), 'c') - abs(c)
+     Mx = round(max(c + r) + 1)
+     mx = round(min(c - r) - 1)
+     My = round(max(r) + 1)
+     my = -My
+     rect = [mx,my,Mx,My]
+     plot2d(real(spec(A)),imag(spec(A)),-1,"031","",rect)
+     //replot(rect)
+     xgrid()
+     for i=1:n
+         circ(r(i), c(i), 0)
+     end
+ endfunction
+
+ function circGersValor(A)
+     Gers(A)
+ endfunction
+ ```
  ### Método Potencia con Tolerancia
  ```
  function [z,l] = pot(A,z,esp)
