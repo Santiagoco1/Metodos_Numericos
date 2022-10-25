@@ -345,3 +345,45 @@ function [y,x,U] = sistema(A, B)
 
 endfunction
 ```
+### Ejercicio 12-b
+```
+function [Q,R] = QR_Factorization(A)
+    n = size(A,1)
+    for k=1:n
+        sum = 0
+        for i=1:k-1
+            sum = sum + ((A(:,k)')*q(:,i))*q(:,i)
+        end
+        v(k) = norm(A(:,k) - sum)
+        q(:,k) = (A(:,k) - sum)/v(k)
+    end
+    Q = q
+    for i=1:n
+        R(i,i) = v(i)
+        for j=i:n
+            R(i,j) = (A(:,j)')*q(:,i)
+        end
+    end
+endfunction
+
+function [x,y,Q,R] = QR_system(A,b)
+    [Q,R] = QR_Factorization(A)
+    n = size(A,1)
+    [nb,mb] = size(b)
+    
+    y = Q'*b
+
+    r = [R y]
+    x(n,mb) = 0
+    for s= 1:mb
+        x(n,s) = r(n,n+s)/r(n,n)
+        for i = n-1:-1:1
+            sumk = 0
+            for k=i+1:n
+                sumk = sumk + r(i,k)*x(k,s)
+            end
+            x(i,s) = (r(i,n+s)-sumk)/r(i,i)
+        end
+    end
+endfunction
+```
